@@ -40,7 +40,7 @@ Folders
 5. Functions. This contains functions used in the .m files 1 - 17 above. 
 6. Matlab_results. This contains various matab .mat datafiles used in the plotting codes above.
 7. PNM_whole_core_LR_EDSR_results. This contains the PNM whole core results for each subvolume in each core, at two different segmentation realisations. Used in files 13-16 above.
-8. media
+8. media. This folder contains the workflow image.
 
 References
 =====
