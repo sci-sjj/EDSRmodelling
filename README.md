@@ -68,7 +68,7 @@ Following the generation of these metrics, several plotting codes can be run to 
 * [A0_1_2_Plot_filtered_image_similarities.m](./A0_1_2_Plot_filtered_image_similarities.m). The plots the fitlered SSIM from [Matlab_results](./Matlab_results).
 * [A0_1_3_Plot_PNM_LR_HR_EDSR_sensitivity.m](./A0_1_3_Plot_PNM_LR_HR_EDSR_sensitivity.m). This plots the petrophysical predictions from the PNM across the different image subvolumes and segmentation realisations for the LR, Cubic, HR and SR images from [Results_PNM_LR_HR_SR_sensitivity_all.mat](./Matlab_results/Results_PNM_LR_HR_SR_sensitivity_all.mat) 
 
-# 3. Continuum modelling and validation
+# 4. Continuum modelling and validation
 
 After the EDSR images have been verified using the image metrics and pore-network model simulations, the EDSR network can be used to generate continuum scale models, for validation with experimental results. We compare the simulations using the continuum models to the accompanying experimental dataset in [2]. First, the following codes are run on each subvolume of the whole core images, as per the verification section:
 
@@ -98,13 +98,13 @@ The continuum simulation outputs can be compared to the experimental results, na
 
 * [A1_1_2_Plot_IMEX_continuum_results.m](./A1_1_2_Plot_IMEX_continuum_results.m). This plots graphs of the continuum model results from above in terms of 3D saturations and pressure compared to the experimental results. The experimental data is stored in [Exp_data](./Exp_data).
 
-Extra Folders
+# 5. Extra Folders
 =====
 
 * Functions. This contains functions used in some of the .m files above. 
 * media. This folder contains the workflow image.
 
-References
+# 6. References
 =====
 
 1. Jackson, S.J, Niu, Y., Manoorkar, S., Mostaghimi, P. and Armstrong, R.T. 2021. Deep learning of multi-resolution X-Ray micro-CT images for multi-scale modelling.
