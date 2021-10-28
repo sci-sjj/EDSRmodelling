@@ -99,13 +99,11 @@ The continuum simulation outputs can be compared to the experimental results, na
 * [A1_1_2_Plot_IMEX_continuum_results.m](./A1_1_2_Plot_IMEX_continuum_results.m). This plots graphs of the continuum model results from above in terms of 3D saturations and pressure compared to the experimental results. The experimental data is stored in [Exp_data](./Exp_data).
 
 # 5. Extra Folders
-=====
 
 * Functions. This contains functions used in some of the .m files above. 
 * media. This folder contains the workflow image.
 
 # 6. References
-=====
 
 1. Jackson, S.J, Niu, Y., Manoorkar, S., Mostaghimi, P. and Armstrong, R.T. 2021. Deep learning of multi-resolution X-Ray micro-CT images for multi-scale modelling.
 2. Jackson, S.J., Lin, Q. and Krevor, S. 2020. Representative Elementary Volumes, Hysteresis, and Heterogeneity in Multiphase Flow from the Pore to Continuum Scale. Water Resources Research, 56(6), e2019WR026396
