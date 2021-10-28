@@ -66,51 +66,50 @@ Following the generation of these metrics, several plotting codes can be run to 
 * [A0_1_0_Plot_raw_filtered_images_2D.m](./A0_1_0_Plot_raw_filtered_images_2D.m). This plots the raw and filtered LR, Cubic, HR and SR images for comparison. It plots a selected 2D slice. 
 * [A0_1_1_Plot_histograms.m](./A0_1_1_Plot_histograms.m). This plots the histograms of the image greyscale values on top of each other for comparison purposes from [Matlab_results](./Matlab_results).
 * [A0_1_2_Plot_filtered_image_similarities.m](./A0_1_2_Plot_filtered_image_similarities.m). The plots the fitlered SSIM from [Matlab_results](./Matlab_results).
-* [A0_1_3_Plot_PNM_LR_HR_EDSR_sensitivity.m](./A0_1_3_Plot_PNM_LR_HR_EDSR_sensitivity.m). This plots the petrophysical predictions from the PNM across the different image subvolumes and segmentation realisations for the LR, Cubic, HR and SR images from [Results_PNM_whole_core_LR_EDSR.m](./Matlab_results/Results_PNM_whole_core_LR_EDSR.m) 
+* [A0_1_3_Plot_PNM_LR_HR_EDSR_sensitivity.m](./A0_1_3_Plot_PNM_LR_HR_EDSR_sensitivity.m). This plots the petrophysical predictions from the PNM across the different image subvolumes and segmentation realisations for the LR, Cubic, HR and SR images from [Results_PNM_LR_HR_SR_sensitivity_all.mat](./Matlab_results/Results_PNM_LR_HR_SR_sensitivity_all.mat) 
 
 # 3. Continuum modelling and validation
 
-After the EDSR images have been verified using the image metrics and pore-network model simulations, the EDSR network can be used to generate continuum scale models, for validation with experimental results. First, the following codes are run on each subvolume of the whole core images, as per the verification section:
+After the EDSR images have been verified using the image metrics and pore-network model simulations, the EDSR network can be used to generate continuum scale models, for validation with experimental results. We compare the simulations using the continuum models to the accompanying experimental dataset in [2]. First, the following codes are run on each subvolume of the whole core images, as per the verification section:
 
 * [validation_image_generator.py](./3D_EDSR/validation_image_generator.py).
 * [main_edsr_validation.py](./3D_EDSR/main_edsr_validation.py). 
 
-These should be run on subvolumes from the whole core images. The subvolumes (and whole-core) images can be found on the [Digital Rocks Portal](http://digitalrocksportal.org/projects/229) and on the [BGS National Geoscience Data Centre](http://dx.doi.org/10.5285/5f899de8-4085-4370-a45e-e613f27e8f1d), respectively. 
+The subvolume (and whole-core) images can be found on the [Digital Rocks Portal](http://digitalrocksportal.org/projects/229) and on the [BGS National Geoscience Data Centre](http://dx.doi.org/10.5285/5f899de8-4085-4370-a45e-e613f27e8f1d), respectively. This will result in SR images (with the pre-exising LR) of each subvolume in both cores 1 and 2. After this, pore-network modelling can be performed using:
 
+* [A1_0_0_Generate_run_PNM_whole_core.m](./A1_0_0_Generate_run_PNM_whole_core.m). This code generates pore-networks for each subvolume in the full core images. It generates this for both the LR and SR images. The networks are then used in the pore-network modelling approach from the ICL Github: (https://github.com/ImperialCollegeLondon/pnextract, https://github.com/ImperialCollegeLondon/pnflow). The results are saved to individual subvolume files for each core at [PNM_whole_core_LR_EDSR_results](./PNM_whole_core_LR_EDSR_results).
 
+The whole core results can then be compiled into a single dataset .mat file using:
 
+* [A1_0_1_Compile_whole_core_PNM.m](./A1_0_1_Compile_whole_core_PNM.m). The results are saved in [Matlab_results](./Matlab_results) as [Results_PNM_whole_core_LR_EDSR.mat](./Matlab_results/Results_PNM_whole_core_LR_EDSR.mat). 
 
+To visualise the petrophysical properties for the whole core, the following code can be run:
 
+* [A1_0_2_Plot_whole_core_PNM.m](./A1_0_2_Plot_whole_core_PNM.m). This uses results in the datefile [Results_PNM_whole_core_LR_EDSR.mat](./Matlab_results/Results_PNM_whole_core_LR_EDSR.mat). 
 
-11. A1_0_0_Generate_run_PNM_whole_core.m. This code generates pore-networks for each subvolume in the full core images. It generates this for both the LR and SR images. The networks are then used in the pore-network modelling approach from the ICL Github: (https://github.com/ImperialCollegeLondon/pnextract, https://github.com/ImperialCollegeLondon/pnflow). The results are saved to individual subvolume files for each core. 
+Continuum models can then be generated using the 3D petrophysical properties. We generate continuum properties for the multiphase flow simulator CMG IMEX. The simulator reads in .dat files which use .inc files of the 3D petrophsical properties to perform continuum scale immiscible drainage multiphase flow simulations, at fixed fractional flow of decane and brine. The simulations run until steady-state, and the results can be compared to the experiments on a 1:1 basis. The following codes generate, and run the files in CMG IMEX (has to be installed seperately):
 
+* [A1_1_0_Generate_run_IMEX_continuum_model_core_1.m](./A1_1_0_Generate_run_IMEX_continuum_model_core_1.m). This generates continuum models in CMG IMEX using the PNM petrophysical data from files [Results_PNM_whole_core_LR_EDSR.mat](./Matlab_results/Results_PNM_whole_core_LR_EDSR.mat). It does this for Core 1. It then runs the files in CMG IMEX (if installed) and then processes and saves the data to [Continuum_modelling_results](./Continuum_modelling_results). 
+* [A1_1_0_Generate_run_IMEX_continuum_model_core_2.m](./A1_1_0_Generate_run_IMEX_continuum_model_core_2.m). The same as above but for core 2.
 
+Example CMG IMEX simulation files, which are generated from these codes, are given for core 1 in the folder [CMG_IMEX_files](./CMG_IMEX_files) 
 
-13. A1_0_1_Compile_whole_core_PNM.m. This compiles the individual subvolume results from the previous code into one single .mat file. 
-14. A1_0_2_Plot_whole_core_PNM.m. This plots various petrophysical results for each subvolume in the whole cores.
+The continuum simulation outputs can be compared to the experimental results, namely 3D saturations and pressures in the form of absolute and relative permeability. The whole core results from our simulations are summarised in the file [Whole_core_results_exp_sim.xlsx](./Whole_core_results_exp_sim.xlsx) along with experimental results. The following code can be run:
 
-14. A1_1_0_Generate_run_IMEX_continuum_model_core_1.m. This generates continuum models in CMG IMEX using the PNM petrophysical data from files 11 - 13 above. It does this for Core 1. It then runs the files in CMG IMEX (if installed) and then processing and saves the data. 
-15. A1_1_1_Generate_run_IMEX_continuum_model_core_2.m. This generates continuum models in CMG IMEX using the PNM petrophysical data from files 11 - 13 above. It does this for Core 2.It then runs the files in CMG IMEX (if installed) and then processing and saves the data. 
-16. A1_1_2_Plot_IMEX_continuum_results.m. This plots the continuum model results from 14, 15 above in terms of 3D saturations and pressure compared to the experimental results from [2]. 
-17. Whole_core_results_exp_sim.xlsx. This is a summary file containing experimental and simualtions results in tabular form, which also appear in the paper [1].
+* [A1_1_2_Plot_IMEX_continuum_results.m](./A1_1_2_Plot_IMEX_continuum_results.m). This plots graphs of the continuum model results from above in terms of 3D saturations and pressure compared to the experimental results. The experimental data is stored in [Exp_data](./Exp_data).
 
-Folders
+Extra Folders
 =====
-1. CMG_IMEX_files. This contains example CMG imex .dat and .inc files generated using file 14 above. 
-2. Continuum_modelling_results. This contains the processed results from the continuum modelling simulations in files 14 and 15. 
-4. Exp_data. This contains experimental data from [2]. 
-5. Functions. This contains functions used in the .m files 1 - 17 above. 
-6. Matlab_results. This contains various matab .mat datafiles used in the plotting codes above.
-7. PNM_whole_core_LR_EDSR_results. This contains the PNM whole core results for each subvolume in each core, at two different segmentation realisations. Used in files 13-16 above.
-8. media. This folder contains the workflow image.
+
+* Functions. This contains functions used in some of the .m files above. 
+* media. This folder contains the workflow image.
 
 References
 =====
-[1] Jackson, S.J, Niu, Y., Manoorkar, S., Mostaghimi, P. and Armstrong, R.T. 2021. Deep learning of multi-resolution X-Ray micro-CT images for multi-scale modelling.
 
-[2] Jackson, S.J., Lin, Q. and Krevor, S. 2020. Representative Elementary Volumes, Hysteresis, and Heterogeneity in Multiphase Flow from the Pore to Continuum Scale. Water Resources Research, 56(6), e2019WR026396
-
-[3] Zahasky, C., Jackson, S.J., Lin, Q., and Krevor, S. 2020. Pore network model predictions of Darcy‐scale multiphase flow heterogeneity validated by experiments. Water Resources Research, 56(6), e e2019WR026708.
+1. Jackson, S.J, Niu, Y., Manoorkar, S., Mostaghimi, P. and Armstrong, R.T. 2021. Deep learning of multi-resolution X-Ray micro-CT images for multi-scale modelling.
+2. Jackson, S.J., Lin, Q. and Krevor, S. 2020. Representative Elementary Volumes, Hysteresis, and Heterogeneity in Multiphase Flow from the Pore to Continuum Scale. Water Resources Research, 56(6), e2019WR026396
+3. Zahasky, C., Jackson, S.J., Lin, Q., and Krevor, S. 2020. Pore network model predictions of Darcy‐scale multiphase flow heterogeneity validated by experiments. Water Resources Research, 56(6), e e2019WR026708.
 
 
 
