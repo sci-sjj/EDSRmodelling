@@ -1,18 +1,15 @@
 EDSR modelling
 =====
-A Github repository for deep-learning image enhancement, pore-network and continuum modelling from X-Ray Micro-CT images. The repository contains all code necessary to recreate the results in the paper [1]. The images that are used in various parts of the code are found on Zenodo, at DOI: 10.5281/zenodo.5542624. There is previous experimental and modelling work performed in the papers of [2,3]. 
+A Github repository for deep-learning image enhancement, pore-network and continuum modelling from X-Ray Micro-CT images. The repository contains all code necessary to recreate the results in the paper [1]. The images that are used in various parts of the code are found on [Zenodo at DOI: 10.5281/zenodo.5542624](https://doi.org/10.5281/zenodo.5542623). There is previous experimental and modelling work performed in the papers of [2,3]. 
 
 
 ![Workflow](media/workflow.png)
 *Summary of the workflow, flowing from left to right. First, the EDSR network is trained \& tested on paired LR and HR data to produce SR data which emulates the HR data. Second, the trained EDSR is applied to the whole core LR data to generate a whole core SR image. A pore-network model (PNM) is then used to generate 3D continuum properties at REV scale from the post-processed image. Finally, the 3D digital model is validated through continuum modelling (CM) of the muiltiphase flow experiments.*
 
-The files are ordered numerically in their intended usage. The codes below operate on the low resolution (LR), high resolution (HR) and super-resolution (SR) images. These can be downloaded at the Zenodo repository above. The SR image was created using the LR data and the EDSR deep learning model, contained in the folder 'EDSR'. There are specific usage instructions as well as a Jupyter notebook therein detailing how the network was trained, and tested. Once these raw images have been created, the following files can be run:
-
-
 The workflow image above summarises the general approach. We list the detailed steps in the workflow below, linking to specific files and folders where necesary. 
 
 # 1. Generating LR, Cubic and HR data
-The low resolution (LR) and high resolution (HR) can be downloaded from Zenodo at DOI: 10.5281/zenodo.5542624. The following code can then be run:
+The low resolution (LR) and high resolution (HR) can be downloaded from [Zenodo at DOI: 10.5281/zenodo.5542624](https://doi.org/10.5281/zenodo.5542623). The following code can then be run:
 
 * [A0_0_0_Generate_LR_bicubic.m](./A0_0_0_Generate_LR_bicubic.m) This code generates Cubic interpolation images from LR images, artifically decreasing the pixel size and interpolating, for use in comparison to HR and SR images later.
 * [A0_0_1_Generate_filtered_images_LR_HR.m](./A0_0_1_Generate_filtered_images_LR_HR.m). This code performs non-local means filtering of the LR, cubic and HR images, given the settings in the paper [1]. 
@@ -38,7 +35,7 @@ To generate suitable training images (sub-slices of the full data above), the fo
 
 The EDSR model can then be trained on the LR and HR sub-sampled data via:
 
-* [main_edsr.py](./3D_EDSR/main_edsr.py). This trains the EDSR network on the LR/HR data. it requires the code [load_data.py](./3D_EDSR/load_data.py), which is the sub-image loader for EDSR trainin. It also requires the 3D EDSR model structure code [edsr_x3_3d.py](./3D_EDSR/edsr_x3_3d.py). The code then saves the trained network as [3D_EDSR.pt](./3D_EDSR/3D_EDSR.pt). The version supplied here is that trained and used in the paper.  
+* [main_edsr.py](./3D_EDSR/main_edsr.py). This trains the EDSR network on the LR/HR data. It requires the code [load_data.py](./3D_EDSR/load_data.py), which is the sub-image loader for EDSR training. It also requires the 3D EDSR model structure code [edsr_x3_3d.py](./3D_EDSR/edsr_x3_3d.py). The code then saves the trained network as [3D_EDSR.pt](./3D_EDSR/3D_EDSR.pt). The version supplied here is that trained and used in the paper.  
 
 To view the training loss performance, the data can be output and saved to .txt files. The data can then be used in:
 
@@ -46,20 +43,20 @@ To view the training loss performance, the data can be output and saved to .txt 
 
 # 3. EDSR network verification
 
-The trained EDSR network at [3D_EDSR.pt](./3D_EDSR/3D_EDSR.pt) can be verified by generating SR images from a different LR image to that which was used in training. Here we use the second subvolume from core 1, found on from Zenodo at DOI: 10.5281/zenodo.5542624:
+The trained EDSR network at [3D_EDSR.pt](./3D_EDSR/3D_EDSR.pt) can be verified by generating SR images from a different LR image to that which was used in training. Here we use the second subvolume from core 1, found on [Zenodo at DOI: 10.5281/zenodo.5542624](https://doi.org/10.5281/zenodo.5542623):
 
 * Core1_Subvol2_LR.tif
 
 The trained EDSR model can then be run on the LR data using:
 
 * [validation_image_generator.py](./3D_EDSR/validation_image_generator.py). This creates input validation LR images. The validation LR images have large size in x,y axes and small size in z axis to reduce computational cost.
-* [main_edsr_validation.py](./3D_EDSR/main_edsr_validation.py).  The to validation LR images are used with the trained EDSR model ato generate 3D SR subimages. These can be saved in the folder [SR_subdata](./3D_EDSR/SR_subdata) as the  Jupyter notebook [Train_review.ipynb](./3D_EDSR/Train_review.ipynb) does. The  SR subimages are then stacked to form a whole 3D SR image.
+* [main_edsr_validation.py](./3D_EDSR/main_edsr_validation.py).  The validation LR images are used with the trained EDSR model to generate 3D SR subimages. These can be saved in the folder [SR_subdata](./3D_EDSR/SR_subdata) as the  Jupyter notebook [Train_review.ipynb](./3D_EDSR/Train_review.ipynb) does. The SR subimages are then stacked to form a whole 3D SR image.
 
-Follow the generation of suitable verification images, various metrics can be calculated from the images to judge performance against the true HR data:
+Following the generation of suitable verification images, various metrics can be calculated from the images to judge performance against the true HR data:
 
 * [A0_0_2_Generate_histogram_data.m](./A0_0_2_Generate_histogram_data.m). This code generates histograms of the LR, Cubic, HR and SR image grey scale values for comparison. The results are saved to [Matlab_results](./Matlab_results).
 * [A0_0_3_Generate_SSIM_2D_3D.m](./A0_0_3_Generate_SSIM_2D_3D.m). This code generates structural similarity index measures between the Cubic, HR and SR images. The results are saved to [Matlab_results](./Matlab_results).
-* [A0_0_4_Generate_run_PNM_LR_Cubic_HR_SR_subvolumes.m](./A0_0_4_Generate_run_PNM_LR_Cubic_HR_SR_subvolumes.m). This generates a pore-network model (PNM) of the LR, Cubic and SR subvolume images. The code as default does this for all 4 subvolumes in Core 1 and Core 2, but can be set to only run for one validation subvolume as required. The code generates multiple networks across different segmentation realizations for the LR, Cubic, HR and SR images. The networks are used in the pore-network modelling approach from the ICL Github: (https://github.com/ImperialCollegeLondon/pnextract, https://github.com/ImperialCollegeLondon/pnflow). The results are saved to [Matlab_results](./Matlab_results) as [Results_PNM_whole_core_LR_EDSR.m](./Matlab_results/Results_PNM_whole_core_LR_EDSR.m) 
+* [A0_0_4_Generate_run_PNM_LR_Cubic_HR_SR_subvolumes.m](./A0_0_4_Generate_run_PNM_LR_Cubic_HR_SR_subvolumes.m). This generates a pore-network model (PNM) of the LR, Cubic and SR subvolume images. The code as default does this for all 4 subvolumes in Core 1 and Core 2, but can be set to only run for one validation subvolume as required. The code generates multiple networks across different segmentation realizations for the LR, Cubic, HR and SR images. The networks are used in the pore-network modelling approach from the ICL Github: (https://github.com/ImperialCollegeLondon/pnextract, https://github.com/ImperialCollegeLondon/pnflow). The results are saved to [Matlab_results](./Matlab_results) as [Results_PNM_whole_core_LR_EDSR.m](./Matlab_results/Results_PNM_LR_HR_SR_sensitivity_all.mat) 
 
 Following the generation of these metrics, several plotting codes can be run to compare LR, Cubic, HR and SR results:
 
@@ -90,7 +87,7 @@ To visualise the petrophysical properties for the whole core, the following code
 Continuum models can then be generated using the 3D petrophysical properties. We generate continuum properties for the multiphase flow simulator CMG IMEX. The simulator reads in .dat files which use .inc files of the 3D petrophsical properties to perform continuum scale immiscible drainage multiphase flow simulations, at fixed fractional flow of decane and brine. The simulations run until steady-state, and the results can be compared to the experiments on a 1:1 basis. The following codes generate, and run the files in CMG IMEX (has to be installed seperately):
 
 * [A1_1_0_Generate_run_IMEX_continuum_model_core_1.m](./A1_1_0_Generate_run_IMEX_continuum_model_core_1.m). This generates continuum models in CMG IMEX using the PNM petrophysical data from files [Results_PNM_whole_core_LR_EDSR.mat](./Matlab_results/Results_PNM_whole_core_LR_EDSR.mat). It does this for Core 1. It then runs the files in CMG IMEX (if installed) and then processes and saves the data to [Continuum_modelling_results](./Continuum_modelling_results). 
-* [A1_1_0_Generate_run_IMEX_continuum_model_core_2.m](./A1_1_0_Generate_run_IMEX_continuum_model_core_2.m). The same as above but for core 2.
+* [A1_1_1_Generate_run_IMEX_continuum_model_core_2.m](./A1_1_1_Generate_run_IMEX_continuum_model_core_2.m). The same as above but for core 2.
 
 Example CMG IMEX simulation files, which are generated from these codes, are given for core 1 in the folder [CMG_IMEX_files](./CMG_IMEX_files) 
 
