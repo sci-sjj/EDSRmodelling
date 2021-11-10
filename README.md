@@ -1,6 +1,6 @@
 EDSR modelling
 =====
-A Github repository for deep-learning image enhancement, pore-network and continuum modelling from X-Ray Micro-CT images. The repository contains all code necessary to recreate the results in the paper [1]. The images that are used in various parts of the code are found on [Zenodo at DOI: 10.5281/zenodo.5542624](https://doi.org/10.5281/zenodo.5542623). There is previous experimental and modelling work performed in the papers of [2,3]. 
+A Github repository for deep-learning image enhancement, pore-network and continuum modelling from X-Ray Micro-CT images. The repository contains all code necessary to recreate the results in the paper [Deep learning of multi-resolution X-Ray micro-CT images for multi-scale modelling](https://arxiv.org/abs/2111.01270) by Jackson, S.J., et al. 2021 [1]. The images that are used in various parts of the code are found on [Zenodo at DOI: 10.5281/zenodo.5542624](https://doi.org/10.5281/zenodo.5542623). There is previous experimental and modelling work performed in the papers of [2,3]. 
 
 
 ![Workflow](media/workflow.png)
@@ -102,7 +102,7 @@ The continuum simulation outputs can be compared to the experimental results, na
 
 # 6. References
 
-1. Jackson, S.J, Niu, Y., Manoorkar, S., Mostaghimi, P. and Armstrong, R.T. 2021. Deep learning of multi-resolution X-Ray micro-CT images for multi-scale modelling.
+1. Jackson, S.J, Niu, Y., Manoorkar, S., Mostaghimi, P. and Armstrong, R.T. 2021. Deep learning of multi-resolution X-Ray micro-CT images for multi-scale modelling. Under review, preprint available at [arxiv.org/abs/2111.01270](https://arxiv.org/abs/2111.01270)
 2. Jackson, S.J., Lin, Q. and Krevor, S. 2020. Representative Elementary Volumes, Hysteresis, and Heterogeneity in Multiphase Flow from the Pore to Continuum Scale. Water Resources Research, 56(6), e2019WR026396
 3. Zahasky, C., Jackson, S.J., Lin, Q., and Krevor, S. 2020. Pore network model predictions of Darcy‐scale multiphase flow heterogeneity validated by experiments. Water Resources Research, 56(6), e e2019WR026708.
 
