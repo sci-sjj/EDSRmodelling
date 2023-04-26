@@ -35,7 +35,7 @@ To generate suitable training images (sub-slices of the full data above), the fo
 
 The EDSR model can then be trained on the LR and HR sub-sampled data via:
 
-* [main_edsr.py](./3D_EDSR/main_edsr.py). This trains the EDSR network on the LR/HR data. It requires the code [load_data.py](./3D_EDSR/load_data.py), which is the sub-image loader for EDSR training. It also requires the 3D EDSR model structure code [edsr_x3_3d.py](./3D_EDSR/edsr_x3_3d.py). The code then saves the trained network as [3D_EDSR.pt](./3D_EDSR/3D_EDSR.pt). The version supplied here is that trained and used in the paper.  
+* [main_edsr.py](./3D_EDSR/main_edsr.py). This trains the EDSR network on the LR/HR data. It requires the code [load_data.py](./3D_EDSR/load_data.py), which is the sub-image loader for EDSR training. It also requires the 3D EDSR model structure code [edsr_x3_3d.py](./3D_EDSR/edsr_x3_3d.py). The code then saves the trained network as [3D_EDSR.pt](./3D_EDSR/3D_EDSR.pt). The version [3D_EDSR.pt](./3D_EDSR/3D_EDSR.pt) is that trained from [Mini_data](./3D_EDSR/Mini_data), whereas the version [3D_EDSR_final.pt](./3D_EDSR/3D_EDSR.pt) is the final trained model from the paper. It uses the full  Core1_Subvol1 dataset.
 
 To view the training loss performance, the data can be output and saved to .txt files. The data can then be used in:
 
